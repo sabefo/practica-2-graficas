@@ -1,0 +1,6 @@
+﻿  Entity.cpp
+  Scene.cpp
+c:\hlocal\proyectosig_vs17_gl_fg_glm\ig1app\scene.cpp(21): warning C4305: 'argument': truncation from 'double' to 'GLclampf'
+  main.cpp
+  Generating Code...
+  IG1App.vcxproj -> C:\hlocal\ProyectosIG_VS17_GL_FG_GLM\bin\IG1AppDebug.exe
