@@ -65,6 +65,11 @@ void Scene::init()
   rectangulo4->setModelMat(glm::rotate(rectangulo4->getModelMat(), radians(90.0), dvec3(1, 0, 0)));
   grObjects.push_back(rectangulo4);
 
+  Chasis* chasis = new Chasis(400);
+  chasis->setModelMat(glm::translate(chasis->getModelMat(), dvec3(190, 150, -25)));
+  chasis->setModelMat(glm::scale(chasis->getModelMat(), dvec3(1,1, 0.1)));
+  grObjects.push_back(chasis);
+
   //  grObjects.push_back(new Dragon(3000));
 //  grObjects.push_back(new Triangulo(100));
 //  grObjects.push_back(new Rectangulo(80, 100));
