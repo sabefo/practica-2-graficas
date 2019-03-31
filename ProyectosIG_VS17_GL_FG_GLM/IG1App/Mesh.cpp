@@ -303,6 +303,32 @@ Mesh * Mesh::generaContCubo(GLdouble l)
 	return m;
 }
 
+Mesh * Mesh::generaCuboLleno(GLdouble l)
+{
+	Mesh* m = new Mesh();
+	m->primitive = GL_TRIANGLE_STRIP;
+	m->numVertices = 10;
+
+	m->vertices = new dvec3[m->numVertices];
+	double x = l / 2;
+
+	m->vertices[0] = dvec3(-x, x, -x);
+	m->vertices[1] = dvec3(-x, -x, -x);
+	m->vertices[2] = dvec3(-x, x, x);
+	m->vertices[3] = dvec3(-x, -x, x);
+	m->vertices[4] = dvec3(x, x, x);
+	m->vertices[5] = dvec3(x, -x, x);
+	m->vertices[6] = dvec3(x, x, -x);
+	m->vertices[7] = dvec3(x, -x, -x);
+	m->vertices[8] = m->vertices[0];
+	m->vertices[9] = m->vertices[1];
+	//m->vertices[10] = m->vertices[5];
+	//m->vertices[11] = m->vertices[4];
+	//m->vertices[12] = m->vertices[0];
+
+	return m;
+}
+
 Mesh * Mesh::generaCajaTexCor(GLdouble l)
 {
 	Mesh *m = generaContCubo(l);

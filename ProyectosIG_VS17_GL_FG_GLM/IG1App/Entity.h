@@ -78,6 +78,8 @@ public:
 	Rectangulo(GLdouble w, GLdouble h);
 	~Rectangulo();
 	void render(glm::dmat4 const& modelViewMat);
+	void update();
+	GLdouble anguloRota;
 };
 
 class Suelo : public Entity
@@ -183,16 +185,46 @@ protected:
 class Rotor : public QuadricEntity
 {
 public:
-	Rotor(GLdouble br, GLdouble tr, GLdouble h);
+	Rotor(GLdouble br, GLdouble tr, GLdouble h, GLdouble w, GLdouble a);
 	~Rotor();
 	void render(glm::dmat4 const& modelViewMat);
 	void update();
 	GLdouble anguloRota = 0;
-	GLdouble anguloTraslada = 0;
 protected:
 	GLdouble baseRadius;
 	GLdouble topRadius;
 	GLdouble height;
+	GLdouble base;
+	GLdouble altura;
+};
 
+class Chasis : public Entity
+{
+public:
+	Chasis(GLdouble l);
+	~Chasis();
+	void render(glm::dmat4 const& modelViewMat);
+};
+
+class Dron : public QuadricEntity
+{
+public:
+	Dron(GLdouble br, GLdouble tr, GLdouble h, GLdouble w, GLdouble a, GLdouble l);
+	~Dron() {};
+	void render(glm::dmat4 const& modelViewMat);
+//	void update();
+	GLdouble anguloRota = 0;
+protected:
+	GLdouble baseRadius;
+	GLdouble topRadius;
+	GLdouble height;
+	GLdouble base;
+	GLdouble altura;
+	GLdouble lado;
+	Rotor* r1;
+	Rotor* r2;
+	Rotor* r3;
+	Rotor* r4;
+	Chasis* c;
 };
 #endif //_H_Entities_H_

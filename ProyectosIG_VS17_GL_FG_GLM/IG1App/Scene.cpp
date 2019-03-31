@@ -20,7 +20,7 @@ void Scene::init()
   grObjects.clear();
   glClearColor(0.4, 0.5, 0.6, 0.7);  // background color (alpha=1 -> opaque)
   glEnable(GL_DEPTH_TEST);  // enable Depth test 
-  grObjects.push_back(new EjesRGB(200.0));
+  grObjects.push_back(new EjesRGB(500.0));
   /*
   Canjilon* c = new Canjilon(100);
   c->setModelMat(glm::translate(c->getModelMat(), dvec3(250, 1, 1)));
@@ -33,15 +33,45 @@ void Scene::init()
   c3->setModelMat(glm::scale(c3->getModelMat(), dvec3(5, 0.5, 0.2)));
   c3->setModelMat(glm::translate(c3->getModelMat(), dvec3(25, 38, -250)));
   grObjects.push_back(c3);
-  */
-  Rotor* rotor = new Rotor(100, 100, 40);
-  grObjects.push_back(rotor);
-  Rectangulo* rectangulo = new Rectangulo(200, 40);
-  rectangulo->setModelMat(glm::rotate(rectangulo->getModelMat(), radians(90.0), dvec3(1, 0, 0)));
-  rectangulo->setModelMat(glm::translate(rectangulo->getModelMat(), dvec3(-100, 0, 0)));
-  grObjects.push_back(rectangulo);
 
-  //  grObjects.push_back(new Dragon(3000));
+
+  , new Rotor(100, 100, 40), new Rotor(100, 100, 40), new Rotor(100, 100, 40)
+
+  */
+  //Rotor* rotor[1] = { new Rotor(100, 100, 40, 200, 40) } ;
+  //grObjects.push_back(rotor[0]);
+  Dron* dron = new Dron(100, 100, 40, 200, 40,4);
+  grObjects.push_back(dron);
+  /*Rectangulo* rectangulo[4] = { new Rectangulo(200, 40), new Rectangulo(200, 40), new Rectangulo(200, 40), new Rectangulo(200, 40) };
+  rectangulo[0]->setModelMat(glm::rotate(rectangulo[0]->getModelMat(), radians(180.0), dvec3(1, 0, 0)));
+  rectangulo[0]->setModelMat(glm::translate(rectangulo[0]->getModelMat(), dvec3(-100, 0, 0)));
+  grObjects.push_back(rectangulo[0]);*/
+
+  /*rotor[1]->setModelMat(glm::translate(rotor[1]->getModelMat(), dvec3(400, 0, 0)));
+  grObjects.push_back(rotor[1]);
+  rectangulo[1]->setModelMat(glm::rotate(rectangulo[1]->getModelMat(), radians(180.0), dvec3(1, 0, 0)));
+  rectangulo[1]->setModelMat(glm::translate(rectangulo[1]->getModelMat(), dvec3(300, 0, 0)));
+  grObjects.push_back(rectangulo[1]);
+
+  rotor[2]->setModelMat(glm::translate(rotor[2]->getModelMat(), dvec3(400, 400, 0)));
+  grObjects.push_back(rotor[2]);
+  rectangulo[2]->setModelMat(glm::translate(rectangulo[2]->getModelMat(), dvec3(300, 0, 400)));
+  rectangulo[2]->setModelMat(glm::rotate(rectangulo[2]->getModelMat(), radians(180.0), dvec3(1, 0, 0)));
+  grObjects.push_back(rectangulo[2]);
+
+  rotor[3]->setModelMat(glm::translate(rotor[3]->getModelMat(), dvec3(0, 400, 0)));
+  grObjects.push_back(rotor[3]);
+  rectangulo[3]->setModelMat(glm::translate(rectangulo[3]->getModelMat(), dvec3(-100, 0, 400)));
+  rectangulo[3]->setModelMat(glm::rotate(rectangulo[3]->getModelMat(), radians(180.0), dvec3(1, 0, 0)));
+  grObjects.push_back(rectangulo[3]);
+
+  Chasis* chasis = new Chasis(400);
+  chasis->setModelMat(glm::translate(chasis->getModelMat(), dvec3(190, -60, 150)));
+  chasis->setModelMat(glm::rotate(chasis->getModelMat(), radians(90.0), dvec3(1, 0, 0)));
+  chasis->setModelMat(glm::scale(chasis->getModelMat(), dvec3(1, 1, 0.1)));
+  grObjects.push_back(chasis);*/
+
+//  grObjects.push_back(new Dragon(3000));
 //  grObjects.push_back(new Triangulo(100));
 //  grObjects.push_back(new Rectangulo(80, 100));
 }

@@ -44,6 +44,9 @@ public:
 	//CAJA
 	static Mesh* generaContCubo(GLdouble l);
 	static Mesh* generaCajaTexCor(GLdouble l);
+
+	static Mesh* generaCuboLleno(GLdouble l);
+
 protected:
 
 	GLuint numVertices = 0;   // arrays size (number of elements)
