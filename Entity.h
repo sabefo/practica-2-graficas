@@ -11,10 +11,10 @@
 
 //-------------------------------------------------------------------------
 
-class Entity 
+class Entity
 {
 public:
-	Entity() : modelMat(1.0) { }; 
+	Entity() : modelMat(1.0) { };
 
 	virtual ~Entity() { };
 
@@ -24,7 +24,7 @@ public:
 	glm::dmat4 const& getModelMat() const { return modelMat; };
 
 	void setModelMat(glm::dmat4 const& aMat) { modelMat = aMat; }
-  
+
 protected:
 
 	Mesh* mesh = nullptr;   // surface mesh
@@ -37,7 +37,7 @@ protected:
 
 //-------------------------------------------------------------------------
 
-class EjesRGB : public Entity 
+class EjesRGB : public Entity
 {
 public:
 	EjesRGB(GLdouble l);
@@ -78,6 +78,8 @@ public:
 	Rectangulo(GLdouble w, GLdouble h);
 	~Rectangulo();
 	void render(glm::dmat4 const& modelViewMat);
+	void update();
+	GLdouble anguloRota;
 };
 
 class Suelo : public Entity
@@ -183,22 +185,46 @@ protected:
 class Rotor : public QuadricEntity
 {
 public:
-	Rotor(GLdouble br, GLdouble tr, GLdouble h);
+	Rotor(GLdouble br, GLdouble tr, GLdouble h, GLdouble w, GLdouble a);
 	~Rotor();
 	void render(glm::dmat4 const& modelViewMat);
 	void update();
 	GLdouble anguloRota = 0;
-	GLdouble anguloTraslada = 0;
 protected:
 	GLdouble baseRadius;
 	GLdouble topRadius;
 	GLdouble height;
+	GLdouble base;
+	GLdouble altura;
 };
 
-class Chasis : public Caja
+class Chasis : public Entity
 {
 public:
 	Chasis(GLdouble l);
 	~Chasis();
+	void render(glm::dmat4 const& modelViewMat);
+};
+
+class Dron : public QuadricEntity
+{
+public:
+	Dron(GLdouble br, GLdouble tr, GLdouble h, GLdouble w, GLdouble a, GLdouble l);
+	~Dron() {};
+	void render(glm::dmat4 const& modelViewMat);
+	void update();
+	GLdouble anguloRota = 0;
+protected:
+	GLdouble baseRadius;
+	GLdouble topRadius;
+	GLdouble height;
+	GLdouble base;
+	GLdouble altura;
+	GLdouble lado;
+	Rotor* r1;
+	Rotor* r2;
+	Rotor* r3;
+	Rotor* r4;
+	Chasis* c;
 };
 #endif //_H_Entities_H_

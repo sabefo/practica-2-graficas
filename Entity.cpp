@@ -12,7 +12,7 @@ void Entity::update()
 }
 
 void Entity::uploadMvM(dmat4 const& modelViewMat) const
-{ 
+{
 	dmat4 aMat = modelViewMat * modelMat;
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixd(value_ptr(aMat));
@@ -20,9 +20,9 @@ void Entity::uploadMvM(dmat4 const& modelViewMat) const
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
 
-EjesRGB::EjesRGB(GLdouble l): Entity() 
+EjesRGB::EjesRGB(GLdouble l) : Entity()
 {
-  mesh = Mesh::createRGBAxes(l);
+	mesh = Mesh::createRGBAxes(l);
 }
 
 Poliespiral::Poliespiral(glm::dvec2 verIni, GLdouble angIni, GLdouble incrAng, GLdouble ladoIni, GLdouble incrLado, GLuint numVert) : Entity()
@@ -42,7 +42,7 @@ Triangulo::Triangulo(GLdouble r) : Entity()
 
 Rectangulo::Rectangulo(GLdouble w, GLdouble h) : Entity()
 {
-//	mesh = Mesh::generaRectanguloRGB(w, h);
+	//	mesh = Mesh::generaRectanguloRGB(w, h);
 	mesh = Mesh::generaRectangulo(w, h);
 }
 
@@ -102,15 +102,33 @@ Cylinder::Cylinder(GLdouble br, GLdouble tr, GLdouble h) : QuadricEntity()
 	height = h;
 }
 
-Rotor::Rotor(GLdouble br, GLdouble tr, GLdouble h) : QuadricEntity()
+Rotor::Rotor(GLdouble br, GLdouble tr, GLdouble h, GLdouble w, GLdouble a) : QuadricEntity()
 {
 	baseRadius = br;
 	topRadius = tr;
 	height = h;
+	base = w;
+	altura = a;
 }
 
-Chasis::Chasis(GLdouble l) : Caja(l)
+Chasis::Chasis(GLdouble l) : Entity()
 {
+	mesh = Mesh::generaCuboLleno(l);
+}
+
+Dron::Dron(GLdouble br, GLdouble tr, GLdouble h, GLdouble w, GLdouble a, GLdouble l) : QuadricEntity()
+{
+	baseRadius = br;
+	topRadius = tr;
+	height = h;
+	base = w;
+	altura = a;
+	lado = l;
+	r1 = new Rotor(100, 100, 40, 200, 40);
+	r2 = new Rotor(100, 100, 40, 200, 40);
+	r3 = new Rotor(100, 100, 40, 200, 40);
+	r4 = new Rotor(100, 100, 40, 200, 40);
+	c = new Chasis(400);
 }
 
 Disk::Disk(GLdouble ir, GLdouble o) : QuadricEntity()
@@ -128,9 +146,9 @@ PartialDisk::PartialDisk(GLdouble ir, GLdouble o, GLdouble sa, GLdouble sw) : Qu
 }
 //-------------------------------------------------------------------------
 
-EjesRGB::~EjesRGB() 
-{ 
-	delete mesh; mesh = nullptr; 
+EjesRGB::~EjesRGB()
+{
+	delete mesh; mesh = nullptr;
 };
 
 Poliespiral::~Poliespiral()
@@ -187,6 +205,7 @@ Chasis::~Chasis()
 {
 	delete mesh; mesh = nullptr;
 };
+
 //-------------------------------------------------------------------------
 
 void EjesRGB::render(dmat4 const& modelViewMat)
@@ -253,10 +272,20 @@ void Triangulo::update()
 void Rectangulo::render(dmat4 const& modelViewMat)
 {
 	if (mesh != nullptr) {
+		dmat4 mat = modelMat;
+		modelMat = translate(modelMat, dvec3(100, 0, 0));
+		modelMat = rotate(modelMat, radians(anguloRota), dvec3(0, 1, 0));
+		modelMat = translate(modelMat, dvec3(-100, 0, 0));
 		uploadMvM(modelViewMat);
 		glColor3d(0, 0, 0);
 		mesh->render();
+		modelMat = mat;
 	}
+}
+
+void Rectangulo::update()
+{
+	anguloRota += 5;
 }
 
 void Suelo::render(dmat4 const& modelViewMat)
@@ -325,7 +354,7 @@ void Canjilon::render(dmat4 const& modelViewMat)
 	if (mesh != nullptr) {
 		dmat4 mat = modelMat;
 		modelMat = translate(mat, dvec3(0, 50, 0));
-		modelMat = translate(modelMat, dvec3(0, radians(anguloTraslada),0));
+		modelMat = translate(modelMat, dvec3(0, radians(anguloTraslada), 0));
 		uploadMvM(modelViewMat);
 		glLineWidth(2);
 		glEnable(GL_CULL_FACE);
@@ -372,15 +401,54 @@ void Cylinder::render(glm::dmat4 const& modelViewMat) {
 }
 
 void Rotor::render(glm::dmat4 const& modelViewMat) {
-	uploadMvM(modelViewMat);
-	glColor3f(1, 0, 0);
-	gluQuadricDrawStyle(q, GLU_FILL);
+	dmat4 mat = modelViewMat;
+	mat = rotate(mat, radians(90.0), dvec3(1, 0, 0));
+	uploadMvM(mat);
 	gluCylinder(q, baseRadius, topRadius, height, 50, 50);
+	glColor3d(0, 0, 0);
+	Rectangulo* rectangulo = new Rectangulo(base, altura);
+	rectangulo->setModelMat(glm::translate(rectangulo->getModelMat(), dvec3(-100, -40, 0)));
+	rectangulo->setModelMat(glm::translate(rectangulo->getModelMat(), dvec3(100, 0, 0)));
+	rectangulo->setModelMat(glm::rotate(rectangulo->getModelMat(), radians(anguloRota), dvec3(0, 1, 0)));
+	rectangulo->setModelMat(glm::translate(rectangulo->getModelMat(), dvec3(-100, 0, 0)));
+	rectangulo->render(modelViewMat);
 }
 
 void Rotor::update()
 {
-	anguloRota += 50;
+	anguloRota += 5;
+}
+
+void Dron::render(glm::dmat4 const& modelViewMat) {
+		dmat4 mat1 = modelViewMat;
+		glColor3d(1, 0, 0);
+		r1->render(mat1);
+		r1->update();
+		dmat4 mat2 = modelViewMat;
+		mat2 = translate(mat2, dvec3(400, 0, 0));
+		glColor3d(0, 1, 0);
+		r2->render(mat2);
+		r2->update();
+		dmat4 mat3 = modelViewMat;
+		mat3 = translate(mat3, dvec3(400, 0, 400));
+		glColor3d(0, 1, 0);
+		r3->render(mat3);
+		r3->update();
+		dmat4 mat4 = modelViewMat;
+		mat4 = translate(mat4, dvec3(0, 0, 400));
+		glColor3d(1, 0, 0);
+		r4->render(mat4);
+		r4->update();
+		dmat4 mat5 = modelViewMat;
+		mat5 = translate(mat5, dvec3(190, -60, 150));
+		mat5 = rotate(mat5, radians(90.0), dvec3(1, 0, 0));
+		mat5 = scale(mat5, dvec3(1, 1, 0.1));
+		c->render(mat5);
+}
+
+void Dron::update()
+{
+	anguloRota += 5;
 }
 
 void Disk::render(glm::dmat4 const& modelViewMat) {
@@ -393,10 +461,23 @@ void Disk::render(glm::dmat4 const& modelViewMat) {
 
 void PartialDisk::render(glm::dmat4 const& modelViewMat) {
 	uploadMvM(modelViewMat);
-	// Fijar el color con glColor3f(...);
-	// Fijar el modo en que se dibuja la entidad con
-	// gluQuadricDrawStyle(q, ...);
+	glColor3f(1.8,0.0,0.5);
+	gluQuadricDrawStyle(q,GLU_POINT);
 	gluPartialDisk(q, innerRadius, outerRadius, 20, 8, startAngle, sweepAngle);
+}
+
+void Chasis::render(dmat4 const& modelViewMat)
+{
+	if (mesh != nullptr) {
+		dmat4 mat = modelMat;
+		modelMat = translate(mat, dvec3(0, 50, 0));
+		uploadMvM(modelViewMat);
+		glLineWidth(2);
+		glColor3f(0, 0, 1);
+		mesh->render();
+		modelMat = mat;
+		glLineWidth(1);
+	}
 }
 
 //glCullFace(GL_FRONT / GL_BACK);
