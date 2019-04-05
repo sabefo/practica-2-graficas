@@ -21,22 +21,12 @@ void Scene::init()
 	glClearColor(0.4, 0.5, 0.6, 0.7);  // background color (alpha=1 -> opaque)
 	glEnable(GL_DEPTH_TEST);  // enable Depth test 
 	grObjects.push_back(new EjesRGB(500.0));
+	
+	Aspanoria* a = new Aspanoria(100, 50);
+	grObjects.push_back(a);
 	/*
-	Canjilon* c = new Canjilon(100);
-	c->setModelMat(glm::translate(c->getModelMat(), dvec3(250, 1, 1)));
-	grObjects.push_back(c);
-	Tablero* c2 = new Tablero(50);
-	c2->setModelMat(glm::scale(c2->getModelMat(), dvec3(5, 0.5, 0.2)));
-	c2->setModelMat(glm::translate(c2->getModelMat(), dvec3(25, 38, 250)));
-	grObjects.push_back(c2);
-	Tablero* c3 = new Tablero(50);
-	c3->setModelMat(glm::scale(c3->getModelMat(), dvec3(5, 0.5, 0.2)));
-	c3->setModelMat(glm::translate(c3->getModelMat(), dvec3(25, 38, -250)));
-	grObjects.push_back(c3);
-	*/
-
 	Dron* dron = new Dron(100, 100, 40, 200, 40, 4);
-	grObjects.push_back(dron);
+	grObjects.push_back(dron);*/
 
 	//PartialDisk* parcial = new PartialDisk(100,150,0,270);
 	//grObjects.push_back(parcial);

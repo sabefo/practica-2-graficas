@@ -121,14 +121,33 @@ public:
 	GLdouble anguloTraslada = 0;
 };
 
-class Tablero : public Caja
+class Tablero : public Entity
 {
 public:
 	Tablero(GLdouble l);
 	~Tablero();
+	void render(glm::dmat4 const& modelViewMat);
 	void update();
 	GLdouble anguloRota = 0;
 	GLdouble anguloTraslada = 0;
+};
+
+class Aspanoria : public Entity
+{
+public:
+	Aspanoria(GLdouble l,GLdouble b);
+	~Aspanoria();
+	~Aspanoria() {};
+	void render(glm::dmat4 const& modelViewMat);
+	void update();
+	GLdouble anguloRota = 0;
+	GLdouble anguloTraslada = 0;
+protected:
+	GLdouble basecanjilon;
+	GLdouble basetablero;
+	Canjilon* c;
+	Tablero* t1;
+	Tablero* t2;
 };
 
 class QuadricEntity : public Entity

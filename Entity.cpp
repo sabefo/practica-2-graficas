@@ -81,8 +81,18 @@ Canjilon::Canjilon(GLdouble l) : Caja(l)
 {
 }
 
-Tablero::Tablero(GLdouble l) : Caja(l)
+Tablero::Tablero(GLdouble l) : Entity()
 {
+	mesh = Mesh::generaContCubo(l);
+}
+
+Aspanoria::Aspanoria(GLdouble l, GLdouble b) : Entity()
+{
+	basecanjilon = l;
+	basetablero = b;
+	c = new Canjilon(100);
+	t1 = new Tablero(50);
+	t2 = new Tablero(50);
 }
 
 QuadricEntity::QuadricEntity() : Entity()
@@ -192,6 +202,11 @@ Canjilon::~Canjilon()
 };
 
 Tablero::~Tablero()
+{
+	delete mesh; mesh = nullptr;
+};
+
+Aspanoria::~Aspanoria()
 {
 	delete mesh; mesh = nullptr;
 };
@@ -354,7 +369,7 @@ void Canjilon::render(dmat4 const& modelViewMat)
 	if (mesh != nullptr) {
 		dmat4 mat = modelMat;
 		modelMat = translate(mat, dvec3(0, 50, 0));
-		modelMat = translate(modelMat, dvec3(0, radians(anguloTraslada), 0));
+		modelMat = translate(modelMat, dvec3(radians(anguloTraslada/-1), radians(anguloTraslada), 0));
 		uploadMvM(modelViewMat);
 		glLineWidth(2);
 		glEnable(GL_CULL_FACE);
@@ -380,10 +395,47 @@ void Canjilon::update()
 	anguloTraslada += 50;
 }
 
+void Tablero::render(dmat4 const& modelViewMat)
+{
+	if (mesh != nullptr) {
+		dmat4 mat = modelMat;
+		glColor3d(0, 0, 0);
+		modelMat = rotate(mat, radians(anguloRota), dvec3(0, 0, 1));
+		uploadMvM(modelViewMat);
+		glLineWidth(2);
+		mesh->render();
+		modelMat = mat;
+		glLineWidth(1);
+	}
+}
+
 void Tablero::update()
 {
-	anguloRota++;
+	anguloRota += 50;
 }
+
+void Aspanoria::render(glm::dmat4 const& modelViewMat) {
+	dmat4 mat1 = modelViewMat;
+	mat1 = translate(mat1, dvec3(250, 1, 1));
+	c->render(mat1);
+	c->update();
+	dmat4 mat2 = modelViewMat;
+	mat2 = scale(mat2, dvec3(5, 0.5, 0.2));
+	mat2 = translate(mat2, dvec3(25, 100, 250));
+	t1->render(mat2);
+	t1->update();
+	dmat4 mat3 = modelViewMat;
+	mat3 = scale(mat3, dvec3(5, 0.5, 0.2));
+	mat3 = translate(mat3, dvec3(25, 100, -250));
+	t2->render(mat3);
+	t2->update();
+}
+
+void Aspanoria::update()
+{
+	anguloRota += 5;
+}
+
 
 void Sphere::render(glm::dmat4 const& modelViewMat) {
 	uploadMvM(modelViewMat);
