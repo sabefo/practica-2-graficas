@@ -2,6 +2,7 @@
 
 #include <gtc/matrix_transform.hpp>  
 #include <gtc/type_ptr.hpp>
+#include <gtc/matrix_access.hpp>
 
 using namespace glm;
 
@@ -78,4 +79,10 @@ void Camera::uploadPM() const
 }
 //-------------------------------------------------------------------------
 
-
+void Camera::setAxes()
+{
+	
+	u = row(viewMat, 0);
+	v = row(viewMat, 1);
+	front = -row(viewMat, 2);
+}

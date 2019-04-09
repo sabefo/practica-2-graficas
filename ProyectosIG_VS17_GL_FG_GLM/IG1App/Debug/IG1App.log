@@ -1,6 +1,8 @@
-﻿  Entity.cpp
-  Scene.cpp
-c:\hlocal\workspace-4.7-64bits\proyectosig_vs17_gl_fg_glm\ig1app\scene.cpp(21): warning C4305: 'argument': truncation from 'double' to 'GLclampf'
+﻿  Camera.cpp
+  Entity.cpp
+c:\hlocal\practica-2-graficas-master\proyectosig_vs17_gl_fg_glm\ig1app\entity.cpp(579): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
   main.cpp
+  Scene.cpp
+c:\hlocal\practica-2-graficas-master\proyectosig_vs17_gl_fg_glm\ig1app\scene.cpp(21): warning C4305: 'argument': truncation from 'double' to 'GLclampf'
   Generating Code...
-  IG1App.vcxproj -> C:\hlocal\workspace-4.7-64bits\ProyectosIG_VS17_GL_FG_GLM\bin\IG1AppDebug.exe
+  IG1App.vcxproj -> C:\hlocal\practica-2-graficas-master\ProyectosIG_VS17_GL_FG_GLM\bin\IG1AppDebug.exe

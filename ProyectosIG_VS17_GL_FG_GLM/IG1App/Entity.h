@@ -11,10 +11,10 @@
 
 //-------------------------------------------------------------------------
 
-class Entity 
+class Entity
 {
 public:
-	Entity() : modelMat(1.0) { }; 
+	Entity() : modelMat(1.0) { };
 
 	virtual ~Entity() { };
 
@@ -24,7 +24,7 @@ public:
 	glm::dmat4 const& getModelMat() const { return modelMat; };
 
 	void setModelMat(glm::dmat4 const& aMat) { modelMat = aMat; }
-  
+
 protected:
 
 	Mesh* mesh = nullptr;   // surface mesh
@@ -37,7 +37,7 @@ protected:
 
 //-------------------------------------------------------------------------
 
-class EjesRGB : public Entity 
+class EjesRGB : public Entity
 {
 public:
 	EjesRGB(GLdouble l);
@@ -121,14 +121,32 @@ public:
 	GLdouble anguloTraslada = 0;
 };
 
-class Tablero : public Caja
+class Tablero : public Entity
 {
 public:
 	Tablero(GLdouble l);
 	~Tablero();
+	void render(glm::dmat4 const& modelViewMat);
 	void update();
 	GLdouble anguloRota = 0;
 	GLdouble anguloTraslada = 0;
+};
+
+class Aspanoria : public Entity
+{
+public:
+	Aspanoria(GLdouble l, GLdouble b);
+	~Aspanoria();
+	void render(glm::dmat4 const& modelViewMat);
+	void update();
+	GLdouble anguloRota = 0;
+	GLdouble anguloTraslada = 0;
+protected:
+	GLdouble basecanjilon;
+	GLdouble basetablero;
+	Canjilon* c;
+	Tablero* t1;
+	Tablero* t2;
 };
 
 class QuadricEntity : public Entity
@@ -185,7 +203,7 @@ protected:
 class Rotor : public QuadricEntity
 {
 public:
-	Rotor(GLdouble br, GLdouble tr, GLdouble h, GLdouble w, GLdouble a);
+	Rotor(GLdouble br, GLdouble tr, GLdouble h, GLdouble w, GLdouble a, bool sentido);
 	~Rotor();
 	void render(glm::dmat4 const& modelViewMat);
 	void update();
@@ -196,6 +214,7 @@ protected:
 	GLdouble height;
 	GLdouble base;
 	GLdouble altura;
+	GLdouble angulo;
 };
 
 class Chasis : public Entity
@@ -212,7 +231,7 @@ public:
 	Dron(GLdouble br, GLdouble tr, GLdouble h, GLdouble w, GLdouble a, GLdouble l);
 	~Dron() {};
 	void render(glm::dmat4 const& modelViewMat);
-//	void update();
+	void update();
 	GLdouble anguloRota = 0;
 protected:
 	GLdouble baseRadius;
@@ -227,4 +246,37 @@ protected:
 	Rotor* r4;
 	Chasis* c;
 };
+
+class Cone : public Entity
+{
+public:
+	Cone(GLdouble h, GLdouble r);
+	~Cone();
+	void render(glm::dmat4 const &modelViewMat);
+	/*void update();*/
+
+protected:
+	GLdouble r;
+	GLdouble h;
+
+	MBR * mesh = nullptr;
+};
+
+class Esfera : public Entity
+{
+public:
+	Esfera(GLint p, GLint m, GLdouble r);
+	~Esfera();
+	void render(glm::dmat4 const &modelViewMat);
+	virtual void update();
+	/*virtual void update(GLuint tiempo);*/
+
+protected:
+	GLint pp;
+	GLint mm;
+	GLdouble rr;
+
+	MBR * mesh = nullptr;
+};
+
 #endif //_H_Entities_H_

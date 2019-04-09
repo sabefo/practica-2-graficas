@@ -7,11 +7,11 @@
 
 //-------------------------------------------------------------------------
 
-class Mesh 
+class Mesh
 {
 public:
 	static Mesh* createRGBAxes(GLdouble l); // creates a new 3D RGB axes mesh
- 
+
 	Mesh(void) { };
 	~Mesh(void);
 	virtual void render();
@@ -57,6 +57,24 @@ protected:
 	glm::dvec2* textures = nullptr;    // texture array
 };
 
+class MBR : Mesh
+{
+public:
+
+	MBR(GLint m, GLint n, glm::dvec3 * perfil);
+	~MBR(void);
+
+	void vertexBuilding(void);
+	void normalize(void);
+
+	virtual void render();
+
+protected:
+	GLdouble m, n;
+	glm::dvec3* perfil;
+	glm::dvec3* normals;
+
+};
 //-------------------------------------------------------------------------
 
 #endif //_H_Scene_H_

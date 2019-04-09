@@ -37,6 +37,9 @@ public:
 	// update scale factor and transfers projMat to GPU
 	void uploadScale(GLdouble s); 
 	
+	//Punto 7 practica 2
+	void setAxes();
+
 protected:
 	
 	glm::dmat4 viewMat;    // view matrix = inverse of modeling matrix
@@ -44,9 +47,24 @@ protected:
 	glm::dmat4 projMat;     // projection matrix
 	
 	GLdouble xRight, xLeft, yTop, yBot;    // size of scene visible area
-	GLdouble nearVal = 1, farVal = 10000;  // view volume
+	GLdouble nearVal = 500, farVal = 10000;  // view volume
 	GLdouble factScale = 1;
 	
+	GLdouble ang = 0.0;
+	GLdouble radio = 1000.0;
+	bool orto = true;
+
+	glm::dvec3 eye = { 1000.0, 1000.0, 1000.0 };
+	glm::dvec3 look = { 0.0, 0.0, 0.0 };
+	glm::dvec3 n = eye - look;
+	glm::dvec3 up = { 0.0, 1.0, 0.0 };
+	glm::dvec3 front = { 0.0, 0.0, -1.0 }; // Observa que es -n
+	glm::dvec3 u = { 1.0, 0.0, 0.0 };
+	glm::dvec3 v = { 0.0, 1.0, 0.0 };
+	glm::dvec3 origen = eye;
+
+	//glm::dmat4 viewMat = glm::lookAt(eye, look, up);
+
 	Viewport* vp;
 };
 

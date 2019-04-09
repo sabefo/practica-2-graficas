@@ -9,71 +9,30 @@ using namespace glm;
 
 void Scene::init()
 { // OpenGL basic setting
-  glClearColor(0.6f, 0.7f, 0.8f, 1.0f);  // background color (alpha=1 -> opaque)
-  glEnable(GL_DEPTH_TEST);  // enable Depth test 
-  glEnable(GL_TEXTURE_2D);
+	glClearColor(0.6f, 0.7f, 0.8f, 1.0f);  // background color (alpha=1 -> opaque)
+	glEnable(GL_DEPTH_TEST);  // enable Depth test 
+	glEnable(GL_TEXTURE_2D);
 
-  // lights
-  // textures  
-  // meshes
+	// lights
+	// textures  
+	// meshes
 
-  grObjects.clear();
-  glClearColor(0.4, 0.5, 0.6, 0.7);  // background color (alpha=1 -> opaque)
-  glEnable(GL_DEPTH_TEST);  // enable Depth test 
-  grObjects.push_back(new EjesRGB(500.0));
-  /*
-  Canjilon* c = new Canjilon(100);
-  c->setModelMat(glm::translate(c->getModelMat(), dvec3(250, 1, 1)));
-  grObjects.push_back(c);
-  Tablero* c2 = new Tablero(50);
-  c2->setModelMat(glm::scale(c2->getModelMat(), dvec3(5, 0.5, 0.2)));
-  c2->setModelMat(glm::translate(c2->getModelMat(), dvec3(25, 38, 250)));
-  grObjects.push_back(c2);
-  Tablero* c3 = new Tablero(50);
-  c3->setModelMat(glm::scale(c3->getModelMat(), dvec3(5, 0.5, 0.2)));
-  c3->setModelMat(glm::translate(c3->getModelMat(), dvec3(25, 38, -250)));
-  grObjects.push_back(c3);
+	grObjects.clear();
+	glClearColor(0.4, 0.5, 0.6, 0.7);  // background color (alpha=1 -> opaque)
+	glEnable(GL_DEPTH_TEST);  // enable Depth test 
+	grObjects.push_back(new EjesRGB(500.0));
+	/*
+	Aspanoria* a = new Aspanoria(100, 50);
+	grObjects.push_back(a);*/
+	
+	//Dron* droncito = new Dron(10, 10, 4, 20, 4, 4);
+	//droncito->setModelMat(glm::translate(droncito->getModelMat(), dvec3(0, 210, 0)));
+	//grObjects.push_back(droncito);
 
+	grObjects.push_back(new Esfera(100, 100,200));
+	//PartialDisk* parcial = new PartialDisk(100,150,0,270);
+	//grObjects.push_back(parcial);
 
-  , new Rotor(100, 100, 40), new Rotor(100, 100, 40), new Rotor(100, 100, 40)
-
-  */
-  //Rotor* rotor[1] = { new Rotor(100, 100, 40, 200, 40) } ;
-  //grObjects.push_back(rotor[0]);
-  Dron* dron = new Dron(100, 100, 40, 200, 40,4);
-  grObjects.push_back(dron);
-  /*Rectangulo* rectangulo[4] = { new Rectangulo(200, 40), new Rectangulo(200, 40), new Rectangulo(200, 40), new Rectangulo(200, 40) };
-  rectangulo[0]->setModelMat(glm::rotate(rectangulo[0]->getModelMat(), radians(180.0), dvec3(1, 0, 0)));
-  rectangulo[0]->setModelMat(glm::translate(rectangulo[0]->getModelMat(), dvec3(-100, 0, 0)));
-  grObjects.push_back(rectangulo[0]);*/
-
-  /*rotor[1]->setModelMat(glm::translate(rotor[1]->getModelMat(), dvec3(400, 0, 0)));
-  grObjects.push_back(rotor[1]);
-  rectangulo[1]->setModelMat(glm::rotate(rectangulo[1]->getModelMat(), radians(180.0), dvec3(1, 0, 0)));
-  rectangulo[1]->setModelMat(glm::translate(rectangulo[1]->getModelMat(), dvec3(300, 0, 0)));
-  grObjects.push_back(rectangulo[1]);
-
-  rotor[2]->setModelMat(glm::translate(rotor[2]->getModelMat(), dvec3(400, 400, 0)));
-  grObjects.push_back(rotor[2]);
-  rectangulo[2]->setModelMat(glm::translate(rectangulo[2]->getModelMat(), dvec3(300, 0, 400)));
-  rectangulo[2]->setModelMat(glm::rotate(rectangulo[2]->getModelMat(), radians(180.0), dvec3(1, 0, 0)));
-  grObjects.push_back(rectangulo[2]);
-
-  rotor[3]->setModelMat(glm::translate(rotor[3]->getModelMat(), dvec3(0, 400, 0)));
-  grObjects.push_back(rotor[3]);
-  rectangulo[3]->setModelMat(glm::translate(rectangulo[3]->getModelMat(), dvec3(-100, 0, 400)));
-  rectangulo[3]->setModelMat(glm::rotate(rectangulo[3]->getModelMat(), radians(180.0), dvec3(1, 0, 0)));
-  grObjects.push_back(rectangulo[3]);
-
-  Chasis* chasis = new Chasis(400);
-  chasis->setModelMat(glm::translate(chasis->getModelMat(), dvec3(190, -60, 150)));
-  chasis->setModelMat(glm::rotate(chasis->getModelMat(), radians(90.0), dvec3(1, 0, 0)));
-  chasis->setModelMat(glm::scale(chasis->getModelMat(), dvec3(1, 1, 0.1)));
-  grObjects.push_back(chasis);*/
-
-//  grObjects.push_back(new Dragon(3000));
-//  grObjects.push_back(new Triangulo(100));
-//  grObjects.push_back(new Rectangulo(80, 100));
 }
 
 void Scene::update()
@@ -101,10 +60,10 @@ void Scene::escena3D()
 	glClearColor(1.0, 1.0, 1.0, 1.0);  // background color (alpha=1 -> opaque)
 	glEnable(GL_DEPTH_TEST);  // enable Depth test 
 	grObjects.push_back(new EjesRGB(200.0));
-//	grObjects.push_back(new Suelo(500, 500, 3, 3));
-//	Estrella3D* e = new Estrella3D(100, 6, 100);  // dvec3(0, 150, 0)
-//	e->setModelMat(glm::translate(e->getModelMat(), dvec3(250, 1, 250)));
-//	grObjects.push_back(e);  // dvec3(0, 150, 0)
+	//	grObjects.push_back(new Suelo(500, 500, 3, 3));
+	//	Estrella3D* e = new Estrella3D(100, 6, 100);  // dvec3(0, 150, 0)
+	//	e->setModelMat(glm::translate(e->getModelMat(), dvec3(250, 1, 250)));
+	//	grObjects.push_back(e);  // dvec3(0, 150, 0)
 	Caja* c = new Caja(100);
 	c->setModelMat(glm::translate(c->getModelMat(), dvec3(250, 1, 250)));
 	grObjects.push_back(c);
@@ -113,16 +72,16 @@ void Scene::escena3D()
 
 Scene::~Scene()
 { // free memory and resources   
-  
-  for (Entity* el: grObjects)
-  {
-	  delete el;  el = nullptr;
-  }
+
+	for (Entity* el : grObjects)
+	{
+		delete el;  el = nullptr;
+	}
 }
 //-------------------------------------------------------------------------
 void Scene::render(dmat4 const& modelViewMat)
 {
-	for (Entity* el: grObjects)
+	for (Entity* el : grObjects)
 	{
 		el->render(modelViewMat);
 	}
